@@ -1,0 +1,64 @@
+<?php
+class Log{
+	private $login;
+	private $logout;
+	private $id_usuario;
+		
+	function __construct(){
+		include_once('Conexion.php');
+	}
+
+	//Setters
+	public function setLogin($login){
+		$this->login = $login;
+	}
+	public function setLogout($logout){
+		$this->logout = $logout;
+	}
+	public function setId_usuario($id_usuario){
+		$this->id_usuario = $id_usuario;
+	}
+	
+	//Getters
+	public function getLogin(){
+		return $this->login;
+	}
+	public function getLogout(){
+		return $this->logout;
+	}
+	public function getId_usuario(){
+		return $this->id_usuario;
+	}
+	
+	//Métodos
+	public function createLogin($id_usuario){
+		$db = new Conexion();
+		$sql = "INSERT INTO logs_usuarios(login,id_usuario) VALUES(CURTIME(),'$id_usuario')";
+		$resul = $db->getData($sql);
+
+		return $resul;
+
+		$db->closeConnection();
+	}
+
+	public function getAllLogs(){
+		$db = new Conexion();
+		$sql = "SELECT * FROM logs_usuarios";
+		$resul = $db->getData($sql);
+
+		return $resul;
+
+		$db->closeConnection();
+	}
+
+	public function getLogsById($id){
+		$db = new Conexion();
+		$sql = "SELECT * FROM logs_usuarios WHERE id=$id";
+		$resul = $db->getData($sql);
+
+		return $resul;
+
+		$db->closeConnection();
+	}
+}
+
